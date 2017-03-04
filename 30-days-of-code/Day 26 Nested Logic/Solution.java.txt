@@ -1,0 +1,52 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.Scanner;
+
+public class Solution {
+
+    public static void main(String[] args) throws ParseException {
+        
+        Scanner scan = new Scanner(System.in);
+        String actual = scan.nextLine();
+        String expected = scan.nextLine();
+        scan.close();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd MM yyyy");
+        
+        Date actualDate = formatter.parse(actual);
+        Date expectedDate = formatter.parse(expected);
+
+        LocalDate actualLocal = actualDate.toInstant().atZone(ZoneId.of("Asia/Kolkata")).toLocalDate();
+        LocalDate expectedLocal = expectedDate.toInstant().atZone(ZoneId.of("Asia/Kolkata")).toLocalDate();
+        
+        if(actualLocal.isBefore(expectedLocal)) {
+        	System.out.println(0);
+        	return;
+        }
+        
+        if(actualLocal.getYear() - expectedLocal.getYear() > 1) {
+        	System.out.println(10000);
+        	return;
+        }
+        	
+        if(actualLocal.getYear() - expectedLocal.getYear() == 1) {
+        	if(expectedLocal.getMonthValue() - actualLocal.getMonthValue() == 11) {
+        		System.out.println(10000);
+        		return;
+        	} else {
+        		System.out.println(((actualLocal.getMonthValue() + expectedLocal.getMonthValue()) % 12) * 500);
+        		return;
+        	}
+        }
+        
+        if(actualLocal.getMonthValue() - expectedLocal.getMonthValue() > 1) {
+        	System.out.println((actualLocal.getMonthValue() - expectedLocal.getMonthValue()) * 500);
+        	return;
+        }
+        
+        System.out.println((actualLocal.getDayOfMonth() - expectedLocal.getDayOfMonth()) * 15);
+    }
+}

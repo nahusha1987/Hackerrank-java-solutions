@@ -1,0 +1,38 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int T = scan.nextInt();
+        while(T-- >0) {
+            checkPrime(scan.nextInt());
+        }
+    }
+    
+    private static void checkPrime(int n) {
+        if(n == 1) {
+            System.out.println("Not prime");
+            return;
+        }
+        
+        if(n == 2) {
+            System.out.println("Prime");
+            return;
+        }
+        
+        if(n % 2 == 0) {
+            System.out.println("Not prime");
+            return;
+        }
+            
+        for(int i = 3; i <= Math.ceil(Math.sqrt(n)); i+=2) {
+            if (n % i == 0) {
+                System.out.println("Not prime");
+                return;
+            }
+        }
+        System.out.println("Prime");
+    }
+}
